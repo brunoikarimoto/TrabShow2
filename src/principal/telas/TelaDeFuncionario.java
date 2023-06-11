@@ -1,12 +1,12 @@
 package principal.telas;
 
-import principal.telas.menus.MenuDeCliente;
+import principal.telas.menus.MenuDeFuncionario;
 
 public class TelaDeFuncionario extends Tela {
 	private static TelaDeFuncionario instance;
 	
 	private TelaDeFuncionario() {
-		super("", new MenuDeCliente());
+		super("MENU DE FUNCIONÁRIOS", new MenuDeFuncionario());
 	}
 	
 	public static synchronized TelaDeFuncionario getInstance() {

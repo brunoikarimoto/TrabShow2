@@ -1,8 +1,5 @@
 package principal.telas.menus;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import principal.telas.Comando;
 import principal.util.Mensagem;
 import principal.util.Prompt;
@@ -11,7 +8,6 @@ import principal.telas.TelaDeFuncionario;
 import principal.telas.TelaDeGerente;
 
 public class MenuInicial extends Menu {
-	private List<ItemMenu> itens = new ArrayList<>();
 	
 	public MenuInicial() {
 		adicionar(1, "Cliente", new Comando() {
@@ -38,13 +34,5 @@ public class MenuInicial extends Menu {
 				Prompt.imprimir(Mensagem.MSG_PROGRAMA_ENCERRADO);
 			}
 		});
-	}
-	
-	public void adicionar(Integer index, String texto, Comando comando) {
-		itens.add(new ItemMenu(index, texto, comando));
-	}
-	
-	public List<ItemMenu> getItens(){
-		return itens;
 	}
 }

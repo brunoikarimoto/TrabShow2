@@ -5,8 +5,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import jakarta.persistence.*;
-import principal.modelos.Ingresso;
-import principal.modelos.Pessoa;
 import principal.util.Prompt;
 
 public abstract class GenericDao<T> implements DAO<T> {
@@ -78,7 +76,7 @@ public abstract class GenericDao<T> implements DAO<T> {
 			lista = em.createQuery("SELECT i FROM Ingresso i WHERE i.cpf_cliente = :CPF").setParameter("CPF", cpf).getResultList();
 		}
 		catch(Exception e) {
-			Prompt.imprimir("Nenhum encontrado. naruto");
+			Prompt.imprimir("Nenhum encontrado.");
 		}
 		
 		return lista;

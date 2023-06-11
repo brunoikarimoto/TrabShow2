@@ -6,6 +6,7 @@ import principal.controles.ClienteController;
 import principal.controles.IngressoController;
 import principal.controles.ShowController;
 import principal.modelos.Cliente;
+import principal.modelos.Comanda;
 import principal.modelos.Pessoa.Sexo;
 import principal.telas.Comando;
 import principal.telas.TelaDeCliente;
@@ -135,6 +136,17 @@ public class MenuDeCliente extends Menu {
 					
 					if(id_cliente != -1) {
 						Cliente cliente = controle.buscarId(id_cliente);
+						
+						Comanda comandaCli = cliente.getComanda();
+						
+						if(comandaCli.getPago() == false) {
+							Prompt.linhaEmBranco();
+							Prompt.imprimir("Pague tudo antes");
+							Prompt.linhaEmBranco();
+							Prompt.pressionarEnter();
+							TelaDeCliente.getInstance().mostrar();
+						}
+						
 						controle.excluir(cliente.getId());
 						
 						Prompt.linhaEmBranco();
@@ -171,7 +183,7 @@ public class MenuDeCliente extends Menu {
 						}
 						else {
 							for(int i = 0; i < shows.size(); i++) {
-								Prompt.imprimir("[" + i + "] " + shows.get(i).getNomeShow());
+								Prompt.imprimir("[" + shows.get(i).getId() + "] " + shows.get(i).getNomeShow());
 							}
 							
 							int escolha = Prompt.lerInteiro("Qual show deseja");

@@ -32,5 +32,8 @@ public class IngressoController {
 	public List<Ingresso> buscarPorCPF(String cpf){
 		return dao.listaIngressoCPF(cpf);
 	}
+	public void atualizar(Ingresso ingresso) {
+		dao.atualizar(ingresso);
+	}
 
 }
