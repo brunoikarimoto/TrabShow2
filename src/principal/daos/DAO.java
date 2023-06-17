@@ -9,7 +9,9 @@ public interface DAO<T> {
 	T buscarPorId(int id);
 	List<T> listar();
 	void excluir(int id);
-	int buscarPorCpf(String cpf);
+	int buscarClientePorCpf(String cpf);
+	int buscarFuncionarioPorCpf(String cpf);
+	int buscarArtistaPorCpf(String cpf);
 	List<T>listaIngressoCPF(String cpf);
 	
 }

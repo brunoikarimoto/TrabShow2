@@ -56,9 +56,6 @@ public class MenuControleEntrada extends Menu {
 									if(ingressosCli == null) {
 										Prompt.linhaEmBranco();
 										Prompt.imprimir("Não tem ingressos");
-										Prompt.linhaEmBranco();
-										Prompt.pressionarEnter();
-										TelaControleEntrada.getInstance().mostrar();
 									}
 									else {
 										for(Ingresso i : ingressosCli) {
@@ -69,32 +66,35 @@ public class MenuControleEntrada extends Menu {
 											if(i.getStatus() == Status.ATIVO) {
 												Prompt.linhaEmBranco();
 												Prompt.imprimir("Já está em uma festa");
-												Prompt.linhaEmBranco();
-												Prompt.pressionarEnter();
-												TelaControleEntrada.getInstance().mostrar();
 											}
 										}
-									}
-									
+									}			
 									
 									if(idIngressoCli != -1) {
 										Ingresso ingressoCli = ingresso.buscarId(idIngressoCli);
-										int simNao = Prompt.lerInteiro("Deseja entrar? [1] Sim, [2] Não");
 										
-										switch(simNao) {
-											case 1:
-												 ingressoCli.setStatus(Status.ATIVO);
-												 ingresso.atualizar(ingressoCli);
-												 Prompt.linhaEmBranco();
-												 Prompt.imprimir("Boa festa!");
-												 break;
-											case 2:
-												Prompt.linhaEmBranco();
-												Prompt.imprimir("Volte sempre");
-												break;
-											default:
-												Prompt.linhaEmBranco();
-												Prompt.imprimir("Inválido");
+										if(ingressoCli.getStatus() == Status.NAO_USADO) {
+											int simNao = Prompt.lerInteiro("Deseja entrar? [1] Sim, [2] Não");
+											
+											switch(simNao) {
+												case 1:
+													 ingressoCli.setStatus(Status.ATIVO);
+													 ingresso.atualizar(ingressoCli);
+													 Prompt.linhaEmBranco();
+													 Prompt.imprimir("Boa festa!");
+													 break;
+												case 2:
+													Prompt.linhaEmBranco();
+													Prompt.imprimir("Volte sempre");
+													break;
+												default:
+													Prompt.linhaEmBranco();
+													Prompt.imprimir("Inválido");
+											}
+										}
+										else {
+											Prompt.linhaEmBranco();
+											Prompt.imprimir("Ingresso já utilizado ou em uso");
 										}
 									}
 									else {

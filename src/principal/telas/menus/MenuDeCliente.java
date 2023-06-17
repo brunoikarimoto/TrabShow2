@@ -5,6 +5,7 @@ import java.util.List;
 import principal.controles.ClienteController;
 import principal.controles.IngressoController;
 import principal.controles.ShowController;
+import principal.modelos.Artista;
 import principal.modelos.Cliente;
 import principal.modelos.Comanda;
 import principal.modelos.Pessoa.Sexo;
@@ -25,7 +26,8 @@ public class MenuDeCliente extends Menu {
 		adicionar(1, Mensagem.MENU_CADASTRO_DE_CLIENTES, new Comando() {
 			public void executar() {
 				Prompt.linhaEmBranco();
-				/*NOME, CPF, IDADE, SEXO*/
+				Prompt.imprimir("CADASTRO DE CLIENTE");
+				
 				String nome = Prompt.lerLinha(Mensagem.MSG_INFORME_NOME);
 				String cpf = Prompt.lerLinha(Mensagem.MSG_INFORME_CPF);
 				
@@ -33,28 +35,30 @@ public class MenuDeCliente extends Menu {
 				if(id_cliente != -1) {
 					Prompt.linhaEmBranco();
 					Prompt.imprimir("Cliente já existente");
-					Prompt.pressionarEnter();
-					TelaDeCliente.getInstance().mostrar();;
 				}
-				int idade = Prompt.lerInteiro("Idade? ");
-				int opcao = Prompt.lerInteiro("Sexo: [1]Homem, [2]Mulher");
-				
-				Sexo sexo;
-				
-				if(opcao == 1) {
-					sexo = Sexo.MASCULINO;
-				}
-				else {
-					sexo = Sexo.FEMININO;
-				}
-				
-				/*fazer validacao se n é vazio*/
-				if(!nome.isEmpty() && !cpf.isEmpty() && idade >= 18) {					
-					controle.adicionar(new Cliente(nome, cpf, idade, sexo));
-				}
-				else {
-					Prompt.linhaEmBranco();
-					Prompt.imprimir("Campos vazios ou menor de idade!");
+				else {					
+					int idade = Prompt.lerInteiro("Idade? ");
+					int opcao = Prompt.lerInteiro("Sexo: [1]Homem, [2]Mulher");
+					
+					Sexo sexo;
+					
+					if(opcao == 1) {
+						sexo = Sexo.MASCULINO;
+					}
+					else {
+						sexo = Sexo.FEMININO;
+					}
+					
+					if(!nome.isEmpty() && !cpf.isEmpty() && idade >= 18) {					
+						controle.adicionar(new Cliente(nome, cpf, idade, sexo));
+						
+						Prompt.linhaEmBranco();
+						Prompt.imprimir("Cliente cadastrado com sucesso");
+					}
+					else {
+						Prompt.linhaEmBranco();
+						Prompt.imprimir("Campos vazios ou menor de idade!");
+					}
 				}
 				Prompt.linhaEmBranco();
 				Prompt.pressionarEnter();
@@ -80,33 +84,35 @@ public class MenuDeCliente extends Menu {
 						if(!cpf.equals(cpfNovo) && id_cliente_novo != -1) {
 							Prompt.linhaEmBranco();
 							Prompt.imprimir("Cliente já existente");
-							Prompt.pressionarEnter();
-							TelaDeCliente.getInstance().mostrar();;
 						}
-						int idade = Prompt.lerInteiro("Idade?");
-						int opcao = Prompt.lerInteiro("Sexo: [1]Homem, [2]Mulher");
-						
-						Sexo sexo;
-						
-						if(opcao == 1) {
-							sexo = Sexo.MASCULINO;
-						}
-						else {
-							sexo = Sexo.FEMININO;
-						}
-						
-						/*fazer validacao se n é vazio*/
-						if(!nome.isEmpty() && !cpf.isEmpty() && idade >= 18) {							
-							cliente.setNome(nome);
-							cliente.setCpf(cpfNovo);
-							cliente.setIdade(idade);
-							cliente.setSexo(sexo);
+						else {							
+							int idade = Prompt.lerInteiro("Idade?");
+							int opcao = Prompt.lerInteiro("Sexo: [1]Homem, [2]Mulher");
 							
-							controle.atualizar(cliente);
-						}
-						else {
-							Prompt.linhaEmBranco();
-							Prompt.imprimir("Campos vazios ou menor de idade!");
+							Sexo sexo;
+							
+							if(opcao == 1) {
+								sexo = Sexo.MASCULINO;
+							}
+							else {
+								sexo = Sexo.FEMININO;
+							}
+							
+							if(!nome.isEmpty() && !cpf.isEmpty() && idade >= 18) {							
+								cliente.setNome(nome);
+								cliente.setCpf(cpfNovo);
+								cliente.setIdade(idade);
+								cliente.setSexo(sexo);
+								
+								controle.atualizar(cliente);
+								
+								Prompt.linhaEmBranco();
+								Prompt.imprimir("Cliente alterado com sucesso!");
+							}
+							else {
+								Prompt.linhaEmBranco();
+								Prompt.imprimir("Campos vazios ou menor de idade!");
+							}
 						}
 						
 						Prompt.linhaEmBranco();
@@ -129,6 +135,7 @@ public class MenuDeCliente extends Menu {
 			public void executar() {
 				Prompt.linhaEmBranco();
 				Prompt.imprimir(Mensagem.MSG_EXCLUSAO_CLIENTE);
+				
 				String cpf = Prompt.lerLinha(Mensagem.MSG_INFORME_CPF);
 				
 				if(!cpf.isEmpty()) {
@@ -142,15 +149,13 @@ public class MenuDeCliente extends Menu {
 						if(comandaCli.getPago() == false) {
 							Prompt.linhaEmBranco();
 							Prompt.imprimir("Pague tudo antes");
-							Prompt.linhaEmBranco();
-							Prompt.pressionarEnter();
-							TelaDeCliente.getInstance().mostrar();
 						}
-						
-						controle.excluir(cliente.getId());
-						
-						Prompt.linhaEmBranco();
-						Prompt.imprimir(Mensagem.MSG_CLIENTE_EXCLUIDO);
+						else {							
+							controle.excluir(cliente.getId());
+							
+							Prompt.linhaEmBranco();
+							Prompt.imprimir(Mensagem.MSG_CLIENTE_EXCLUIDO);
+						}
 					}
 					else {
 						Prompt.linhaEmBranco();
@@ -163,7 +168,6 @@ public class MenuDeCliente extends Menu {
 			}
 		});
 		
-		/*TODO INGRESSO*/
 		adicionar(4, "Comprar ingresso", new Comando() {
 			public void executar() {
 				Prompt.linhaEmBranco();
@@ -187,7 +191,7 @@ public class MenuDeCliente extends Menu {
 							}
 							
 							int escolha = Prompt.lerInteiro("Qual show deseja");
-							Show showEscolhido = shows.get(escolha);
+							Show showEscolhido = showControle.buscarId(escolha);
 							
 							if(showEscolhido != null) {
 								Prompt.imprimir("Quantidade de ingressos: " + showEscolhido.getQuantIngressos());
@@ -195,35 +199,34 @@ public class MenuDeCliente extends Menu {
 								if(showEscolhido.getQuantIngressos() <= 0) {
 									Prompt.linhaEmBranco();
 									Prompt.imprimir("Ingressos esgotados!");
-									Prompt.linhaEmBranco();
-									Prompt.pressionarEnter();
-									TelaDeCliente.getInstance().mostrar();
 								}
-								
-								if(cliente.getSexo() == Sexo.MASCULINO) {
-									Prompt.imprimir("Valor do ingresso: R$" + showEscolhido.getValorMasc());
-								}
-								else {
-									Prompt.imprimir("Valor do ingresso: R$" + showEscolhido.getValorFem());
-								}
-								
-								escolha = Prompt.lerInteiro("Deseja comprar? [1] Sim, [2] Não");
-								switch(escolha) {
-									case 1:
-										showEscolhido.setQuantIngressos(showEscolhido.getQuantIngressos() - 1);
-										showControle.atualizar(showEscolhido);
-										ingressoControle.adicionar(new Ingresso(showEscolhido.getNomeShow(), cliente.getCpf()));
-										Prompt.linhaEmBranco();
-										Prompt.imprimir("Comprado com sucesso");
-										break;
-									case 2:
-										Prompt.linhaEmBranco();
-										Prompt.imprimir("Volte sempre!");
-										break;
-									default:
-										Prompt.linhaEmBranco();
-										Prompt.imprimir("Opcao invalida");
-								}
+								else {									
+									if(cliente.getSexo() == Sexo.MASCULINO) {
+										Prompt.imprimir("Valor do ingresso: R$" + showEscolhido.getValorMasc());
+									}
+									else {
+										Prompt.imprimir("Valor do ingresso: R$" + showEscolhido.getValorFem());
+									}
+									
+									escolha = Prompt.lerInteiro("Deseja comprar? [1] Sim, [2] Não");
+									
+									switch(escolha) {
+										case 1:
+											showEscolhido.setQuantIngressos(showEscolhido.getQuantIngressos() - 1);
+											showControle.atualizar(showEscolhido);
+											ingressoControle.adicionar(new Ingresso(showEscolhido.getNomeShow(), cliente.getCpf()));
+											Prompt.linhaEmBranco();
+											Prompt.imprimir("Comprado com sucesso");
+											break;
+										case 2:
+											Prompt.linhaEmBranco();
+											Prompt.imprimir("Volte sempre!");
+											break;
+										default:
+											Prompt.linhaEmBranco();
+											Prompt.imprimir("Opcao invalida");
+									}
+								}								
 							}
 							else {
 								Prompt.linhaEmBranco();
@@ -235,9 +238,14 @@ public class MenuDeCliente extends Menu {
 						Prompt.linhaEmBranco();
 						Prompt.imprimir("Crie uma conta antes!");
 					}
-					Prompt.linhaEmBranco();
-					Prompt.pressionarEnter();
 				}
+				else {
+					Prompt.linhaEmBranco();
+					Prompt.imprimir("CPF inválido");
+				}
+				
+				Prompt.linhaEmBranco();
+				Prompt.pressionarEnter();
 				TelaDeCliente.getInstance().mostrar();
 			}
 		});
@@ -267,6 +275,7 @@ public class MenuDeCliente extends Menu {
 							}
 						}
 						else {
+							Prompt.linhaEmBranco();
 							Prompt.imprimir("Nenhum ingresso =(");
 						}
 					}
@@ -274,14 +283,56 @@ public class MenuDeCliente extends Menu {
 						Prompt.linhaEmBranco();
 						Prompt.imprimir(Mensagem.MSG_CLIENTE_NAO_ENCONTRADO);
 					}
-					Prompt.linhaEmBranco();
-					Prompt.pressionarEnter();
 				}
+				else {
+					Prompt.linhaEmBranco();
+					Prompt.imprimir("CPF inválido");
+				}
+				
+				Prompt.linhaEmBranco();
+				Prompt.pressionarEnter();
 				TelaDeCliente.getInstance().mostrar();
 			}
 		});
 		
-		adicionar(6, Mensagem.MENU_VOLTAR, new Comando() {
+		adicionar(6, "Infos Shows", new Comando() {
+			public void executar() {
+				List<Show> shows = showControle.getShow();
+				
+				if(shows.isEmpty()) {
+					Prompt.linhaEmBranco();
+					Prompt.imprimir("Nenhum show no momento");
+				}
+				else {
+					for(Show show : shows) {
+						Prompt.imprimir(show.getNomeShow() + show.getDiaEvento());
+						Prompt.imprimir("Quantidade de ingressos: " + show.getQuantIngressos());
+						Prompt.imprimir("Valor ingresso masculino: R$" + show.getValorMasc());
+						Prompt.imprimir("Valor ingresso feminino: R$" + show.getValorFem());
+						
+						List<Artista> artistas = show.getArtistas();
+						
+						if(artistas.isEmpty()) {
+							Prompt.imprimir("Lineup em breve");
+						}
+						else {
+							Prompt.imprimir("Lineup:");
+							
+							for(Artista artista : artistas) {
+								Prompt.imprimir("Artista: " + artista.getNome());
+								Prompt.imprimir("---------------------------");
+							}
+						}						
+					}
+				}
+				
+				Prompt.linhaEmBranco();
+				Prompt.pressionarEnter();
+				TelaDeCliente.getInstance().mostrar();
+			}
+		});
+		
+		adicionar(7, Mensagem.MENU_VOLTAR, new Comando() {
 			public void executar() {
 				TelaPrincipal.getInstance().mostrar();
 			}

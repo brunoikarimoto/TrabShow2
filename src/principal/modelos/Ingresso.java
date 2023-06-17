@@ -33,8 +33,8 @@ public class Ingresso {
 	private String nomeShow;
 	private Status status;
 	
-	@ManyToOne(targetEntity = Cliente.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "cpf_cliente", referencedColumnName = "cpf")
+//	@ManyToOne(targetEntity = Cliente.class, cascade = CascadeType.ALL)
+//	@JoinColumn(name = "cpf_cliente", referencedColumnName = "cpf")
 	private String clienteCPF;
 	
 	public String getNomeShow() {

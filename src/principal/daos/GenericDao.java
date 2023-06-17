@@ -51,15 +51,44 @@ public abstract class GenericDao<T> implements DAO<T> {
 		em.merge(entidade);
 		em.flush();
 		tx.commit();
+		em.refresh(entidade);
 		return entidade;
 	}
 
-	public int buscarPorCpf(String cpf) {
+	public int buscarClientePorCpf(String cpf) {
 		int p = -1;
 		
 		
 		try {			
-			p = (int)em.createQuery("SELECT p.id FROM Pessoa p WHERE p.cpf = :CPF").setParameter("CPF", cpf).getSingleResult();
+			p = (int)em.createQuery("SELECT c.id FROM Cliente c WHERE c.cpf = :CPF").setParameter("CPF", cpf).getSingleResult();
+		}
+		catch(Exception e) {
+			Prompt.imprimir("Não encontrado");
+		}
+		
+		return p;
+	}
+	
+	public int buscarFuncionarioPorCpf(String cpf) {
+		int p = -1;
+		
+		
+		try {			
+			p = (int)em.createQuery("SELECT f.id FROM Funcionario f WHERE f.cpf = :CPF").setParameter("CPF", cpf).getSingleResult();
+		}
+		catch(Exception e) {
+			Prompt.imprimir("Não encontrado");
+		}
+		
+		return p;
+	}
+	
+	public int buscarArtistaPorCpf(String cpf) {
+		int p = -1;
+		
+		
+		try {			
+			p = (int)em.createQuery("SELECT a.id FROM Artista a WHERE a.cpf = :CPF").setParameter("CPF", cpf).getSingleResult();
 		}
 		catch(Exception e) {
 			Prompt.imprimir("Não encontrado");
@@ -73,7 +102,7 @@ public abstract class GenericDao<T> implements DAO<T> {
 		List<T> lista = null;
 		
 		try {
-			lista = em.createQuery("SELECT i FROM Ingresso i WHERE i.cpf_cliente = :CPF").setParameter("CPF", cpf).getResultList();
+			lista = em.createQuery("SELECT i FROM Ingresso i WHERE i.clienteCPF = :CPF").setParameter("CPF", cpf).getResultList();
 		}
 		catch(Exception e) {
 			Prompt.imprimir("Nenhum encontrado.");

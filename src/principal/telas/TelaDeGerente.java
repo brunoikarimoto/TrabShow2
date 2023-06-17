@@ -1,12 +1,12 @@
 package principal.telas;
 
-import principal.telas.menus.MenuDeCliente;
+import principal.telas.menus.MenuDeGerente;
 
 public class TelaDeGerente extends Tela {
 	private static TelaDeGerente instance;
 	
 	private TelaDeGerente() {
-		super("", new MenuDeCliente());
+		super("MENU DE GERENTE", new MenuDeGerente());
 	}
 	
 	public static synchronized TelaDeGerente getInstance() {

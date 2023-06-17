@@ -28,7 +28,7 @@ public class ClienteController {
 		return dao.buscarPorId(id);
 	}
 	public int buscarCPF(String cpf) {
-		return dao.buscarPorCpf(cpf);
+		return dao.buscarClientePorCpf(cpf);
 	}
 	public void adicionar(Cliente cliente) {
 		dao.salvar(cliente);
